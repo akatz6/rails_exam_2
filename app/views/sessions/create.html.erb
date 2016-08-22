@@ -1,0 +1,31 @@
+<%= link_to "Logout", root_path %>
+
+<h1>Hi <%=@user.first_name%> <%=@user.last_name%></h1>
+
+<p>Here are some organizations you can join</p>
+
+<% @organizations.each do |organization|%>
+<td><%= link_to organization.name, organization_path(organization.id) %></td>
+<br>
+<p><%=organization.description%></p>
+<%count =0 %>
+<% @members.each do |member|%>
+<%if member.organization_id == organization.id%>
+	<%count+=1 %>
+	<%end%>
+<%end%>
+<p>Guests <%=count %></p>
+<%end%>
+<%= form_for @organization do |f| %>
+  <%= f.label :name %>:
+  <%= f.text_field :name %><br />
+
+  <%= f.label :description %>:
+  <%= f.text_field :description %><br />
+
+  <%= f.submit %>
+<% end %>
+
+<% flash.each do |key, value| %>
+  <%= content_tag :div, value, class: "flash #{key}" %>
+<% end %>

@@ -1,0 +1,27 @@
+<%= link_to "DashBoard", new_session_path %>
+<%= link_to "Logout", root_path %>
+<p>Name Of Event</p>
+<p><%= @org.name%></p>
+<p>Description</p>
+<p><%= @org.description%></p>
+<p>Event Planner</p>
+<p><%= @org.user%></p>
+
+<% if @is_member%>
+<%= form_for @org , method: :delete do |f| %>
+  <%= f.submit "Leave Event"%>
+  <% end %>
+
+ <%else%>
+ <%= form_for @org do |f| %>
+  <%= f.submit "Join Event" %>
+<%end%>
+<% end %>
+
+
+<p>Memebers:</p>
+<% @members.each do |member|%>
+	<%if member.organization_id == @org.id%>
+	<p><%= member.first_name%> <%= member.last_name%></p>
+	<%end%>
+<%end%>
